@@ -15,6 +15,7 @@ public class Main {
     public static final String LIST_CONTACTS  = "LC";
     public static final String QUIT           = "Q";
     public static final String SAME_CONTACT = "EP";
+    public static final String GET_NAME = "GN";
 
     //Constantes que definem as mensagens para o utilizador
     public static final String CONTACT_EXISTS = "contactBook.Contact already exists.";
@@ -27,6 +28,7 @@ public class Main {
     public static final String COMMAND_ERROR = "Unknown command.";
     public static final String EQUAL_CONTACT = "There are contacts that share phone numbers.";
     public static final String DIFF_CONTACT = "All contacts have different phone numbers.";
+    public static final String PHONE_NOT_EXIST = "Phone number does not exist.";
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -58,6 +60,9 @@ public class Main {
                     break;
                 case SAME_CONTACT:
                     verifyContacts(cBook);
+                    break;
+                case GET_NAME:
+                    getName(in, cBook);
                     break;
                 default:
                     System.out.println(COMMAND_ERROR);
@@ -160,4 +165,14 @@ public class Main {
         } else System.out.println(DIFF_CONTACT);
     }
 
+    private static void getName(Scanner in, ContactBook cBook) {
+        int phoneNumber = in.nextInt();
+        in.nextLine();
+        if (cBook.hasPhone(phoneNumber)) {
+            Contact contact = cBook.getContactByPhone(phoneNumber);
+            System.out.println(contact.getName());
+        } else {
+            System.out.println(PHONE_NOT_EXIST);
+        }
+    }
 }
